@@ -32,7 +32,7 @@ class Globals():
     playerthorns = 10
     #Percent of damage the monsters do is reduced by
     global playerarmor
-    playerarmor = 10
+    playerarmor = 7.5
     #Percent that you will enrage when attacked below 50% hp
     global playerenrage
     playerenrage = 5
@@ -49,10 +49,10 @@ class Globals():
     
     #currency
     global coins
-    coins = 500
+    coins = 0
     
     global rubies
-    rubies = 5
+    rubies = 0
     
     #charaterstate
     global currentstate
@@ -114,4 +114,4 @@ class Globals():
     spelltwo = ''
     
     global spellthree
-    spellthree = 'assets/sprites/enchant-red-1.png'
+    spellthree = ''

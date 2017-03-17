@@ -9,6 +9,7 @@ import time
 import ui
 import sound
 
+from spell_scene import *
 from stats_scene import *
 from shop_scene import *
 from game_scene import *
@@ -20,7 +21,7 @@ class MainMenuScene(Scene):
         self.run_label_down = False
         self.shop_label_down = False
         self.stats_label_down = False
-        self.shoprub_label_down = False
+        self.spells_label_down = False
         self.size_of_screen_x = self.size.x
         self.size_of_screen_y = self.size.y
         self.screen_center_x = self.size_of_screen_x/2
@@ -35,58 +36,37 @@ class MainMenuScene(Scene):
                                      parent = self,
                                      scale = 1.25)
                                      
-        self.smoke_run = SpriteNode('assets/sprites/smoke/BlackSmoke18.png', 
+        self.smoke_run = SpriteNode('assets/sprites/Right.png', 
                                      position = self.size / 2,
                                      parent = self,
-                                     scale = 1.25)
-        
-        self.run_label = LabelNode(text = 'Run',
-                                     font=('Markerfelt-Wide', 50),
-                                     parent = self,
-                                     position = self.size / 2,
-                                     color = 'grey')
+                                     color = '#b3b3b3',
+                                     scale = 0.55)
                                      
-        self.smoke_shop = SpriteNode('assets/sprites/smoke/BlackSmoke16.png', 
-                                     position = (self.size_of_screen_x - 85, self.size_of_screen_y - 100),
+        self.smoke_shop = SpriteNode('assets/sprites/Store.png', 
+                                     position = (self.size_of_screen_x - 75, self.size_of_screen_y - 75),
                                      parent = self,
-                                     scale = 1.25)
-        
-        self.shop_label = LabelNode(text = 'Coin',
-                                     font=('Markerfelt-Wide', 40),
+                                     color = '#b3b3b3',
+                                     scale = 0.55)
+        self.smoke_spells = SpriteNode('assets/sprites/spellicon.PNG', 
+                                     position = (self.size_of_screen_x - 75, 75),
                                      parent = self,
-                                     position = (self.size_of_screen_x - 100, self.size_of_screen_y - 100),
-                                     color = 'grey')
-        
-        self.smoke_shoprub = SpriteNode('assets/sprites/smoke/BlackSmoke16.png', 
-                                     position = (self.size_of_screen_x - 285, self.size_of_screen_y - 100),
-                                     parent = self,
-                                     scale = 1.25)
+                                     color = '#b3b3b3',
+                                     scale = 0.55)
                                      
-        self.shoprub_label = LabelNode(text = 'Ruby',
-                                     font=('Markerfelt-Wide', 40),
+        self.smoke_stats = SpriteNode('assets/sprites/Menu.png', 
+                                     position = (75, self.size_of_screen_y - 75),
                                      parent = self,
-                                     position = (self.size_of_screen_x - 300, self.size_of_screen_y - 100),
-                                     color = 'grey')
-                                     
-        self.smoke_stats = SpriteNode('assets/sprites/smoke/BlackSmoke15.png', 
-                                     position = (self.size_of_screen_x - 85, self.size_of_screen_y - 300),
-                                     parent = self,
-                                     scale = 1.25)
-        
-        self.stats_label = LabelNode(text = 'Stats',
-                                     font=('Markerfelt-Wide', 40),
-                                     parent = self,
-                                     position = (self.size_of_screen_x - 100, self.size_of_screen_y - 300),
-                                     color = 'grey')
+                                     color = '#b3b3b3',
+                                     scale = 0.55)
                                      
         self.coins_label = LabelNode(text = str(self.coinz),
                                      font=('CopperPlate-Bold', 25),
                                      parent = self,
                                      anchor_point = (0, 0.5),
-                                     position = (50, self.size_of_screen_y - 80),
+                                     position = (190, self.size_of_screen_y - 75),
                                      color = 'gold')
         self.coins_img = SpriteNode('assets/sprites/coins.PNG', 
-                                     position = (29, self.size_of_screen_y - 80),
+                                     position = (170, self.size_of_screen_y - 75),
                                      parent = self,
                                      scale = 0.14)
         
@@ -95,14 +75,14 @@ class MainMenuScene(Scene):
                                      parent = self,
                                      color = '#ff0043',
                                      anchor_point = (0, 0.5),
-                                     position = (50, self.size_of_screen_y - 120)))
+                                     position = (170, self.size_of_screen_y - 115)))
                                      
         self.ruby_img = SpriteNode('assets/sprites/gem.PNG', 
-                                     position = (30, self.size_of_screen_y - 120),
+                                     position = (150, self.size_of_screen_y - 115),
                                      parent = self,
                                      scale = 0.15)
         self.exp_img = SpriteNode('assets/sprites/exporb.PNG', 
-                                     position = (30, self.size_of_screen_y - 40),
+                                     position = (150, self.size_of_screen_y - 35),
                                      parent = self,
                                      scale = 0.24,
                                      color = '#9aff84')
@@ -112,11 +92,11 @@ class MainMenuScene(Scene):
                                      parent = self,
                                      color = '#00ff9b',
                                      anchor_point = (0, 0.5),
-                                     position = (50, self.size_of_screen_y - 40)))
+                                     position = (170, self.size_of_screen_y - 35)))
     def update(self):
         # this method is called, hopefully, 60 times a second
         self.counter = self.counter + 1
-        if self.counter >= 50:
+        if self.counter >= 30:
             self.counter = 0
             self.rubiez = globals.rubies
             self.rubylabel.text = str(self.rubiez)
@@ -124,10 +104,19 @@ class MainMenuScene(Scene):
             self.coins_label.text = str(self.coinz)
             self.exp_label.text = 'Lv' + str(globals.playerlevel) + ' (' + str(globals.playerexp) + ' / ' + str(globals.playerexpnext) + ')'
             if globals.playerexp >= globals.playerexpnext:
-                globals.coins = globals.coins + (200 * globals.playerlevel)
+                globals.coins = globals.coins + (50 * globals.playerlevel)
                 globals.playerexp = globals.playerexp - globals.playerexpnext
                 globals.playerlevel = globals.playerlevel + 1
-                globals.playerexpnext = int(round(globals.playerexpnext * 1.55))
+                globals.rubies = globals.rubies + 1
+                if globals.playerlevel <= 5:
+                    globals.playerexpnext = int(round(globals.playerexpnext * 1.1))
+                elif globals.playerlevel <= 15:
+                    globals.playerexpnext = int(round(globals.playerexpnext * 1.25))
+                elif globals.playerlevel <= 30:
+                    globals.playerexpnext = int(round(globals.playerexpnext * 1.4))
+                elif globals.playerlevel <= 50:
+                    globals.playerexpnext = int(round(globals.playerexpnext * 1.65))
+            
     def touch_began(self, touch):
         # this method is called, when user touches the screen
         pass
@@ -138,22 +127,22 @@ class MainMenuScene(Scene):
     
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
-        if self.stats_label.frame.contains_point(touch.location) or self.smoke_stats.frame.contains_point(touch.location):
+        if self.smoke_spells.frame.contains_point(touch.location):
+            self.spells_label_down = True
+            sound.play_effect('assets/Chop.caf')
+            self.present_modal_scene(SpellsScene())
+        if self.smoke_stats.frame.contains_point(touch.location):
             self.stats_label_down = True
             sound.play_effect('assets/Chop.caf')
             self.present_modal_scene(StatsScene())
-        if self.shoprub_label.frame.contains_point(touch.location) or self.smoke_shoprub.frame.contains_point(touch.location):
-            self.shoprub_label_down = True
-            sound.play_effect('assets/Chop.caf')
-            self.present_modal_scene(ShopRubScene())
-        if self.shop_label.frame.contains_point(touch.location) or self.smoke_shop.frame.contains_point(touch.location):
+        if self.smoke_shop.frame.contains_point(touch.location):
             self.shop_label_down = True
             sound.play_effect('assets/Chop.caf')
             self.present_modal_scene(HitAndRunShopScene())
-        if self.run_label.frame.contains_point(touch.location) or self.smoke_run.frame.contains_point(touch.location):
+        if self.smoke_run.frame.contains_point(touch.location):
             self.run_label_down = True
             sound.play_effect('assets/Chop.caf')
-            run(GameScene(), show_fps = True, orientation = PORTRAIT)
+            run(GameScene(), show_fps = True, orientation = PORTRAIT, multi_touch = True, anti_alias = False)
     
     def did_change_size(self):
         # this method is called, when user changes the orientation of the screen

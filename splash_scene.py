@@ -29,50 +29,39 @@ class SplashScene(Scene):
         self.game_label = LabelNode(text = 'HIT & RUN',
                                     font=('CopperPlate-Bold', 80),
                                     parent = self,
-                                    position = (self.screen_center_x, self.screen_center_y + 75),
+                                    position = (self.screen_center_x, self.size_of_screen_y + 100),
                                     color = 'black')
                                      
-        self.loadbarback = (SpriteNode('./assets/sprites/game/emptybar.JPG', 
+        self.loadbarback = (SpriteNode('./assets/sprites/emptybar.JPG', 
                               position = (self.screen_center_x, self.screen_center_y - 15),
                               parent = self,
                               scale = 1,
-                              size = (380, 30)))
-        self.loadbarright = (SpriteNode('./assets/sprites/game/barright.PNG', 
-                              position = (self.screen_center_x + 195, self.screen_center_y - 15),
-                              parent = self,
-                              scale = 1.25,
-                              size = (10, 30)))
+                              color = '#ffffff',
+                              size = (418, 29)))
                               
-        self.loadbarleft = (SpriteNode('./assets/sprites/game/barleft.PNG', 
-                              position = (self.screen_center_x - 195, self.screen_center_y - 15),
+        self.rsword = SpriteNode('assets/sprites/swordshieldright.PNG', 
+                              position = (self.screen_center_x + 300, self.bar),
                               parent = self,
-                              scale = 1.25,
-                              size = (10, 30)))
-        
-        self.rightsword = (SpriteNode('./assets/sprites/splash/swords.PNG', 
-                              position = (self.screen_center_x + 225, self.screen_center_y - 15),
-                              parent = self,
-                              color = 'black',
-                              scale = 0.6))
+                              scale = 0.3)
                               
-        
-        self.leftsword = (SpriteNode('./assets/sprites/splash/swords.PNG', 
-                              position = (self.screen_center_x - 225, self.screen_center_y - 15),
+        self.lsword = SpriteNode('assets/sprites/swordshieldleft.PNG', 
+                              position = (self.screen_center_x - 300, self.bar),
                               parent = self,
-                              color = 'black',
-                              scale = 0.6))
+                              scale = 0.3)
                               
-        self.loadbarimg = (SpriteNode('./assets/sprites/splash/loadbar.PNG', 
+        self.loadbarimg = SpriteNode('./assets/sprites/splash/loadbar.PNG', 
                               position = (self.screen_center_x, self.bar),
                               parent = self,
+                              color = '#ff0000',
                               anchor_point = (0,0.5),
-                              size = (self.pixels, 25)))
+                              size = (self.pixels, 25))
                               
         self.loadbar = (LabelNode(text = str(self.percent) + '%',
                                       position = (self.screen_center_x, self.bar),
                                       color = '#00f215',
                                       font = ('CopperPlate-Bold', 18),
                                       parent = self))
+        self.game_label.run_action(Action.move_to(self.screen_center_x, self.screen_center_y + 23, 2.25, TIMING_BOUNCE_OUT))
     def update(self):
         #this method is called, hopefully, 60 times a second
         self.loadmaxpixels = 380
@@ -82,7 +71,7 @@ class SplashScene(Scene):
         if not self.presented_scene and self.percent >= 100:
             self.present_modal_scene(MainMenuScene())
         else:
-           self.timee = self.timee + random.randrange(4,8,16)
+           self.timee = self.timee + 2
         
         #Increasing in size
         self.loadbarimg.position = (self.screen_center_x - 190, self.bar)
@@ -92,44 +81,64 @@ class SplashScene(Scene):
         #Colors on load bar label
         if self.percent <= 5:
             self.loadbar.color = '#FF0000'
+            self.loadbarimg.color = '#FF0000'
         elif self.percent <= 10 and self.percent > 5:
             self.loadbar.color = '#FF2000'
+            self.loadbarimg.color = '#FF2000'
         elif self.percent <= 15 and self.percent > 10:
             self.loadbar.color = '#FF4000'
+            self.loadbarimg.color = '#FF4000'
         elif self.percent <= 20 and self.percent > 15:
             self.loadbar.color = '#FF6000'
+            self.loadbarimg.color = '#FF6000'
         elif self.percent <= 25 and self.percent > 20:
             self.loadbar.color = '#FF8000'
+            self.loadbarimg.color = '#FF8000'
         elif self.percent <= 30 and self.percent > 25:
             self.loadbar.color = '#FFA000'
+            self.loadbarimg.color = '#FFA000'
         elif self.percent <= 35 and self.percent > 30:
             self.loadbar.color = '#FFC000'
+            self.loadbarimg.color = '#FFC000'
         elif self.percent <= 40 and self.percent > 35:
             self.loadbar.color = '#FFE000'
+            self.loadbarimg.color = '#FFE000'
         elif self.percent <= 45 and self.percent > 40:
             self.loadbar.color = '#FFFF00'
+            self.loadbarimg.color = '#FFFF00'
         elif self.percent <= 50 and self.percent > 45:
             self.loadbar.color = '#E0FF00'
+            self.loadbarimg.color = '#E0FF00'
         elif self.percent <= 55 and self.percent > 50:
             self.loadbar.color = '#C0FF00'
+            self.loadbarimg.color = '#C0FF00'
         elif self.percent <= 60 and self.percent > 55:
             self.loadbar.color = '#A0FF00'
+            self.loadbarimg.color = '#A0FF00'
         elif self.percent <= 65 and self.percent > 60:
             self.loadbar.color = '#80FF00'
+            self.loadbarimg.color = '#80FF00'
         elif self.percent <= 70 and self.percent > 65:
-            self.loadbar.color = '#60FF00'
+            self.loadbar.color = '#70FF00'
+            self.loadbarimg.color = '#70FF00'
         elif self.percent <= 75 and self.percent > 70:
-            self.loadbar.color = '#50FF00'
+            self.loadbar.color = '#60FF00'
+            self.loadbarimg.color = '#60FF00'
         elif self.percent <= 80 and self.percent > 75:
             self.loadbar.color = '#50FF00'
+            self.loadbarimg.color = '#50FF00'
         elif self.percent <= 85 and self.percent > 80:
             self.loadbar.color = '#40FF00'
+            self.loadbarimg.color = '#40FF00'
         elif self.percent <= 90 and self.percent > 85:
             self.loadbar.color = '#30FF00'
+            self.loadbarimg.color = '#30FF00'
         elif self.percent <= 95 and self.percent > 90:
             self.loadbar.color = '#20FF00'
+            self.loadbarimg.color = '#20FF00'
         elif self.percent <= 100 and self.percent > 95:
             self.loadbar.color = '#10FF00'
+            self.loadbarimg.color = '#10FF00'
             
     def touch_began(self, touch):
         # this method is called, when user touches the screen

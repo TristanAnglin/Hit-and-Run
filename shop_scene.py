@@ -102,10 +102,10 @@ class HitAndRunShopScene(Scene):
                                      position = (self.screen_center_x + self.screen_center_x/2, self.screen_center_y - self.screen_center_y/1.465),
                                      color = 'grey')
         
-        self.back_button = SpriteNode('assets/sprites/backw.PNG',
+        self.back_button = SpriteNode('assets/sprites/Left.png',
                                        parent = self,
-                                       position = (75, self.size_of_screen_y - 110),
-                                       scale = 0.17,
+                                       position = (75, self.size_of_screen_y - 75),
+                                       scale = 0.4,
                                        color = 'grey')
                                        
         self.back1_square1 = SpriteNode('./assets/sprites/shop/backsquare.PNG',
@@ -269,7 +269,7 @@ class HitAndRunShopScene(Scene):
                                      font=('CopperPlate-Bold', 25),
                                      parent = self,
                                      anchor_point = (0, 0.5),
-                                     position = (50, self.size_of_screen_y - 30),
+                                     position = (self.back_button.position.x + 80, self.back_button.position.y + 25),
                                      color = 'gold')
         self.refund1 = LabelNode(text = '- Refund -',
                                      font=('CopperPlate-Bold', 20),
@@ -303,7 +303,7 @@ class HitAndRunShopScene(Scene):
                                      color = '#828282')
         
         self.coins_img = SpriteNode('assets/sprites/coins.PNG', 
-                                     position = (29, self.size_of_screen_y - 30),
+                                     position = (self.back_button.position.x + 60, self.back_button.position.y + 25),
                                      parent = self,
                                      scale = 0.14)
     def update(self):
@@ -339,7 +339,7 @@ class HitAndRunShopScene(Scene):
         elif globals.lv6 == 1:
             self.refund6.color = 'grey'
             
-        if self.counter >= 500:
+        if self.counter >= 30:
             self.counter = 0
             self.coinz = globals.coins
             self.coins_label.text = str(self.coinz)

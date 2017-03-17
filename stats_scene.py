@@ -30,35 +30,48 @@ class StatsScene(Scene):
                                      position = (self.size_of_screen_x - 55, self.size_of_screen_y - 40),
                                      color = 'grey')
                                      
-        self.basicslabel = LabelNode(text = '( BASICS )',
+        self.basicslabel = LabelNode(text = '[ BASICS ]',
                                      font=('CopperPlate-Light', 30),
                                      parent = self,
                                      anchor_point = (0,0.5),
-                                     position = (30, self.screen_center_y + self.screen_center_x/1.2),
+                                     position = (30, self.screen_center_y + self.screen_center_x/1.15),
                                      color = '#ff8500')
-        self.basics = LabelNode(text = 'Health\nDamage\nAttack Speed\nDefense',
+        self.basics = LabelNode(text = 'Health\nAttack Power\nAttack Speed\nDefense',
                                      font=('CopperPlate-Light', 25),
                                      parent = self,
                                      anchor_point = (0,1),
                                      position = (self.basicslabel.position.x + 22, self.basicslabel.position.y - 15),
                                      color = 'grey')
-        self.chanceslabel = LabelNode(text = '( CHANCES )',
+        self.basicsstats = LabelNode(text = str(globals.fullhealth) + '\n' + str(globals.playerdmglowest) + '-' + str(globals.playerdmghighest) + '\n' + str(globals.playeratkspeed) + 's\n' + str(globals.playerarmor) + '%',
+                                     font=('CopperPlate-Light', 25),
+                                     parent = self,
+                                     anchor_point = (0,1),
+                                     position = (self.basics.position.x + 250, self.basics.position.y),
+                                     color = '#ff8500')
+        
+        self.chanceslabel = LabelNode(text = '[ CHANCES ]',
                                      font=('CopperPlate-Light', 30),
                                      parent = self,
                                      anchor_point = (0,0.5),
                                      position = (self.basicslabel.position.x, self.basics.position.y - 120),
                                      color = '#d100da')
-        self.chances = LabelNode(text = 'Critical\nThorns\nEnrage\nDodge',
+        self.chances = LabelNode(text = 'Critical\nThorns\nDodge',
                                      font=('CopperPlate-Light', 25),
                                      parent = self,
                                      anchor_point = (0,1),
                                      position = (self.basicslabel.position.x + 22, self.chanceslabel.position.y - 15),
                                      color = 'grey')
-        self.healinglabel = LabelNode(text = '( HEALING )',
+        self.chancesstats = LabelNode(text = str(globals.playercritchance) + '% [ +' + str(globals.playercritdmg) + '% dmg ]\n' + str(globals.playerthorns) + '%\n' + str(globals.playerdodge) + '%',
+                                     font=('CopperPlate-Light', 25),
+                                     parent = self,
+                                     anchor_point = (0,1),
+                                     position = (self.chances.position.x + 250, self.chances.position.y),
+                                     color = '#d100da')
+        self.healinglabel = LabelNode(text = '[ HEALING ]',
                                      font=('CopperPlate-Light', 30),
                                      parent = self,
                                      anchor_point = (0,0.5),
-                                     position = (self.basicslabel.position.x, self.chances.position.y - 120),
+                                     position = (self.basicslabel.position.x, self.chances.position.y - 95),
                                      color = '#2cff00')
         self.healing = LabelNode(text = 'Lifesteal\nRegeneration',
                                      font=('CopperPlate-Light', 25),
@@ -66,7 +79,13 @@ class StatsScene(Scene):
                                      anchor_point = (0,1),
                                      position = (self.basicslabel.position.x + 22, self.healinglabel.position.y - 15),
                                      color = 'grey')
-        self.essencelabel = LabelNode(text = '( ESSENCE )',
+        self.healingstats = LabelNode(text = str(globals.playerlifesteal) + '%\n' + str(globals.overtimeregen) + 'hp /s',
+                                     font=('CopperPlate-Light', 25),
+                                     parent = self,
+                                     anchor_point = (0,1),
+                                     position = (self.healing.position.x + 250, self.healing.position.y),
+                                     color = '#2cff00')
+        self.essencelabel = LabelNode(text = '[ ESSENCE ]',
                                      font=('CopperPlate-Light', 30),
                                      parent = self,
                                      anchor_point = (0,0.5),
@@ -78,7 +97,12 @@ class StatsScene(Scene):
                                      anchor_point = (0,1),
                                      position = (self.basicslabel.position.x + 22, self.essencelabel.position.y - 15),
                                      color = 'grey')
-        
+        self.essencesstats = LabelNode(text = str(globals.mana) + '\n' + str(globals.managain) + ' /s\n' + str(globals.energy) + '\n' + str(globals.energygain) + ' /s',
+                                     font=('CopperPlate-Light', 25),
+                                     parent = self,
+                                     anchor_point = (0,1),
+                                     position = (self.essences.position.x + 250, self.essences.position.y),
+                                     color = '#009bff')
         
                                      
                                      
@@ -93,11 +117,11 @@ class StatsScene(Scene):
                                      
         back_button_position = self.size
         back_button_position.x = 75
-        back_button_position.y = back_button_position.y - 110
-        self.back_button = SpriteNode('assets/sprites/backw.PNG',
+        back_button_position.y = back_button_position.y - 75
+        self.back_button = SpriteNode('assets/sprites/Left.png',
                                        parent = self,
                                        position = back_button_position,
-                                       scale = 0.17,
+                                       scale = 0.55,
                                        color = 'grey')
                                        
     def update(self):
